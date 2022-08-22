@@ -9,13 +9,13 @@ namespace Assets.Scripts
 {
     public class Player
     {
-        public static GameObject GameObject { get; private set; }
-        public static PlayerHandler ScriptHandler { get; private set; }
+        public GameObject GameObject { get; private set; }
+        public PlayerMovement PlayerMovementHandler { get; private set; }
 
         public Player(GameObject gameObject) 
         {
             GameObject = gameObject;
-            ScriptHandler = gameObject.GetComponent("PlayerHandler") as PlayerHandler;
+            PlayerMovementHandler = gameObject.GetComponent("PlayerHandler") as PlayerMovement;
         }
     }
 }

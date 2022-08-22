@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHandler : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D _playerBody;
     private Animator _playerAnimator;
@@ -31,13 +31,12 @@ public class PlayerHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
-        print($"Velocity: {_playerBody.velocity} - GravityScale: {_playerBody.velocity}");
         // Flips character based on direction
         if (GameHandler.HorizontalInput > 0.01f)
         {
             transform.localScale = Vector3.one;
         } 
-        else if (GameHandler.HorizontalInput < 0.01f)
+        else if (GameHandler.HorizontalInput < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
@@ -62,7 +61,6 @@ public class PlayerHandler : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.W))
             {
-                print("Jumping");
                 Jump();
             }            
         }
@@ -94,9 +92,9 @@ public class PlayerHandler : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //}
 
     private bool IsGrounded()
     {        
@@ -111,6 +109,11 @@ public class PlayerHandler : MonoBehaviour
         Vector2 movementDirection = new Vector2(transform.localScale.x, 0);
         RaycastHit2D rayCastHit = Physics2D.BoxCast(_playerCollider.bounds.center, _playerCollider.bounds.size, 0, movementDirection, 0.1f, GameHandler.WallLayer);
         return rayCastHit.collider != null;
+    }
+
+    public bool CanAttack()
+    {
+        return GameHandler.HorizontalInput == 0 && IsGrounded() && !OnWall();
     }
 
     private void OnDrawGizmos()

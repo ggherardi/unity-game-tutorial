@@ -12,6 +12,7 @@ public class GameHandler : MonoBehaviour
     private static string _debugText = string.Empty;
     public static Player Player { get; private set; }
     public static float HorizontalInput { get; private set; }
+    public static bool HasRightClicked { get; private set; }
 
     [SerializeField]
     private LayerMask _groundLayer;
@@ -40,8 +41,10 @@ public class GameHandler : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         HorizontalInput = Input.GetAxis("Horizontal");
+        print("Horizontalinput = " + HorizontalInput);
+        HasRightClicked = Input.GetMouseButton(0);
     }
 
     public static void WriteDebug(string text, bool appendText = true)
