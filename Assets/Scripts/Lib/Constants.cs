@@ -20,6 +20,7 @@ namespace Assets.Scripts
             public const string Grounded = "grounded";
             public const string JumpTrigger = "jumpTrigger";
             public const string AttackTrigger = "attackTrigger";
+            public const string ExplodeTrigger = "explodeTrigger";
         }        
     }
 }

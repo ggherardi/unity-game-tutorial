@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField]
-    private float _cooldownTimer = Mathf.Infinity;
-    [SerializeField]
-    private float _attackCooldown;
+    [SerializeField] private float _cooldownTimer = Mathf.Infinity;
+    [SerializeField] private float _attackCooldown;
+    [SerializeField] private Transform _firePoint; // Position from which the bullets will be fired
+    [SerializeField] private GameObject[] _fireballs;
     private Animator _playerAnimator;
     private PlayerMovement _playerMovementHandler;
 
@@ -28,9 +28,14 @@ public class PlayerAttack : MonoBehaviour
         _cooldownTimer += Time.deltaTime;
     }
 
+    // Object pooling will be used instead of instantiate and destroy
     private void Attack()
     {
         _playerAnimator.SetTrigger(Constants.Animations.AttackTrigger);
         _cooldownTimer = 0;
+
+        // Moving one of the fireballs to the firepoint
+        _fireballs[0].transform.position = _firePoint.position;
+        _fireballs[0].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
     }
 }
