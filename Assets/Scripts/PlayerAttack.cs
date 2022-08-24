@@ -7,8 +7,9 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private float _cooldownTimer = Mathf.Infinity;
     [SerializeField] private float _attackCooldown;
-    [SerializeField] private Transform _firePoint; // Position from which the bullets will be fired
-    [SerializeField] private GameObject[] _fireballs;
+    [SerializeField] private Transform _firePoint; // Position from which the fireballs will be fired
+    [SerializeField] private GameObject[] _fireballsHolder;
+    private int _fireballCounter = 0;
     private Animator _playerAnimator;
     private PlayerMovement _playerMovementHandler;
 
@@ -35,7 +36,23 @@ public class PlayerAttack : MonoBehaviour
         _cooldownTimer = 0;
 
         // Moving one of the fireballs to the firepoint
-        _fireballs[0].transform.position = _firePoint.position;
-        _fireballs[0].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+        _fireballsHolder[_fireballCounter].transform.position = _firePoint.position;
+        _fireballsHolder[_fireballCounter].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+
+        // FindFireballIndex: The method I made is a bit different, don't know if it's more efficient. This way I just increment the index of the fireball to use next attack, without loops.
+        _fireballCounter = _fireballCounter == _fireballsHolder.Length - 1 ? 0 : _fireballCounter + 1;
+    }
+
+    // FindFireballIndex: Method made by the tutorial
+    private int FindFireball()
+    {
+        for(int i = 0; i < _fireballsHolder.Length; i++)
+        {
+            if (!_fireballsHolder[i].activeInHierarchy)
+            {
+                return i;
+            }
+        }
+        return 0;
     }
 }
