@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class Player
+    public class PlayerReference
     {
         public GameObject GameObject { get; private set; }
         public PlayerMovement PlayerMovementHandler { get; private set; }
 
-        public Player(GameObject gameObject) 
+        public PlayerReference(GameObject gameObject) 
         {
             GameObject = gameObject;
             PlayerMovementHandler = gameObject.GetComponent("PlayerHandler") as PlayerMovement;

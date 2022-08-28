@@ -14,6 +14,11 @@ namespace Assets.Scripts
             public const string Platform = "Platform";
         }
 
+        public struct Tags
+        {
+            public const string Player = "Player";            
+        }
+
         public struct Animations
         {
             public const string Run = "run";

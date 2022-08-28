@@ -33,9 +33,13 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _hit = true;
-        _projectileCollider.enabled = false;
-        _projectileAnimator.SetTrigger(Constants.Animations.ExplodeTrigger);
+        // I added this to avoid hitting doors that are just triggers
+        if (!collision.isTrigger)
+        {
+            _hit = true;
+            _projectileCollider.enabled = false;
+            _projectileAnimator.SetTrigger(Constants.Animations.ExplodeTrigger);
+        }        
     }
 
     public void SetDirection(float direction)

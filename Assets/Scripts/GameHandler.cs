@@ -7,23 +7,22 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
+    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask _wallsLayer;
     private static GameHandler _instance;
     private Rect _debugRect;
     private static string _debugText = string.Empty;
-    public static Player Player { get; private set; }
+    public static PlayerReference Player { get; private set; }
+    public static CameraReference Camera { get; private set; }
     public static float HorizontalInput { get; private set; }
-    public static bool HasRightClicked { get; private set; }
-
-    [SerializeField]
-    private LayerMask _groundLayer;
-    [SerializeField]
-    private LayerMask _wallsLayer;
+    public static bool HasRightClicked { get; private set; }    
     public static LayerMask GroundLayer => _instance._groundLayer;
-    public static LayerMask WallLayer => _instance._wallsLayer;
+    public static LayerMask WallLayer => _instance._wallsLayer;    
 
     private void Awake()
     {        
-        Player = new Player(GameObject.Find("Player"));
+        Player = new PlayerReference(GameObject.Find("Player"));
+        Camera = new CameraReference(GameObject.Find("Main Camera"));
         _debugRect = new Rect(10f, 10f, 300f, 200f);
         _instance = this;
     }
