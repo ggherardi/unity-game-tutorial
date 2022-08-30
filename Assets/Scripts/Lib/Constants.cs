@@ -29,5 +29,11 @@ namespace Assets.Scripts
             public const string HurtTrigger = "hurtTrigger";
             public const string DeathTrigger = "deathTrigger";
         }        
+
+        public struct Layers
+        {
+            public const int Player = 7;
+            public const int Enemy = 8;
+        }
     }
 }
