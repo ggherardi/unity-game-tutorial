@@ -44,4 +44,10 @@ public class Health : MonoBehaviour
             }            
         }
     }
+
+    public void HealByPercentage(float healAmountPercentage)
+    {
+        float healAmount = MaxHealth * healAmountPercentage;
+        CurrentHealth = Mathf.Clamp(CurrentHealth + healAmount, CurrentHealth, MaxHealth);
+    }
 }
