@@ -26,6 +26,8 @@ namespace Assets.Scripts
             public const string JumpTrigger = "jumpTrigger";
             public const string AttackTrigger = "attackTrigger";
             public const string ExplodeTrigger = "explodeTrigger";
+            public const string HurtTrigger = "hurtTrigger";
+            public const string DeathTrigger = "deathTrigger";
         }        
     }
 }
