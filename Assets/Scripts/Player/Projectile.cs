@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
         {
             _hit = true;
             _projectileCollider.enabled = false;
-            _projectileAnimator.SetTrigger(Constants.Animations.ExplodeTrigger);
+            _projectileAnimator.SetTrigger(Constants.Animations.Fireball.ExplodeTrigger);
         }        
     }
 

@@ -17,7 +17,7 @@ public class FollowCameraHandler : MonoBehaviour
         //transform.position = new Vector3(GameHandler.Player.GameObject.transform.position.x, GameHandler.Player.GameObject.transform.position.y, transform.position.z);
 
         // Using the script parameter
-        transform.position = new Vector3(_playerTransform.position.x + _lookAhead, _playerTransform.position.y, transform.position.z);
+        transform.position = new Vector3(_playerTransform.position.x + _lookAhead, _playerTransform.position.y + 1, transform.position.z);
         float cameraDirection = GameHandler.HorizontalInput == 0 ? 0 : _playerTransform.localScale.x;
         _lookAhead = Mathf.Lerp(_lookAhead, cameraDirection, _speed * Time.deltaTime);        
     }

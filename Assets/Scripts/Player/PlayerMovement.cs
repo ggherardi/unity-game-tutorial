@@ -42,8 +42,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Sets run animation
-        _playerAnimator.SetBool(Constants.Animations.Run, GameHandler.HorizontalInput != 0);
-        _playerAnimator.SetBool(Constants.Animations.Grounded, IsGrounded());
+        _playerAnimator.SetBool(Constants.Animations.Player.Run, GameHandler.HorizontalInput != 0);
+        _playerAnimator.SetBool(Constants.Animations.Player.Grounded, IsGrounded());
 
         if(_wallJumpCooldown > 0.2f)
         {
@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded())
         {
-            _playerAnimator.SetTrigger(Constants.Animations.JumpTrigger);
+            _playerAnimator.SetTrigger(Constants.Animations.Player.JumpTrigger);
             _playerBody.velocity = new Vector2(_playerBody.velocity.x, JumpForce);
         }       
         else if (OnWall())

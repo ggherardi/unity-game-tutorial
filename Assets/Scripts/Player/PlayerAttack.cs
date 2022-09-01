@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
     // Object pooling will be used instead of instantiate and destroy
     private void Attack()
     {
-        _playerAnimator.SetTrigger(Constants.Animations.AttackTrigger);
+        _playerAnimator.SetTrigger(Constants.Animations.Player.AttackTrigger);
         _cooldownTimer = 0;
 
         // Moving one of the fireballs to the firepoint

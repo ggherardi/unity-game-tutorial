@@ -34,20 +34,17 @@ public class Health : MonoBehaviour
         }
     }
 
-    private IEnumerator Flash()
+    private IEnumerator IFrame()
     {
         Physics2D.IgnoreLayerCollision(Constants.Layers.Player, Constants.Layers.Enemy, true);
         for(int i = 0; i < _numberOfFlashes; i++)
         {
             _playerSpriteRenderer.color = new Color(1, 0, 0, 0.5f);
-            GameHandler.WriteDebug($"flashing red");
             yield return new WaitForSeconds(_iframesDuration / _numberOfFlashes / 2); // or (_iframesDuration / (_numberOfFlashes * 2))
             _playerSpriteRenderer.color = Color.white;
-            GameHandler.WriteDebug($"flashing white");
-            yield return new WaitForSeconds(_iframesDuration / _numberOfFlashes / 2); // or(_iframesDuration / (_numberOfFlashes * 2))
+            yield return new WaitForSeconds(_iframesDuration / _numberOfFlashes / 2); // or (_iframesDuration / (_numberOfFlashes * 2))
         }        
         Physics2D.IgnoreLayerCollision(Constants.Layers.Player, Constants.Layers.Enemy, false);
-        GameHandler.WriteDebug($"Vulnerable again");
     }
 
     public void TakeDamage(float damage)
@@ -56,15 +53,15 @@ public class Health : MonoBehaviour
         CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, _maxHealth);
         if(CurrentHealth > 0)
         {            
-            _playerAnimator.SetTrigger(Constants.Animations.HurtTrigger);
-            StartCoroutine(Flash());
+            _playerAnimator.SetTrigger(Constants.Animations.Player.HurtTrigger);
+            StartCoroutine(IFrame());
             //iframes
         }
         else
         {
             if (!_dead)
             {
-                _playerAnimator.SetTrigger(Constants.Animations.DeathTrigger);
+                _playerAnimator.SetTrigger(Constants.Animations.Player.DeathTrigger);
                 GetComponent<PlayerMovement>().enabled = false;
                 _dead = true;
             }            

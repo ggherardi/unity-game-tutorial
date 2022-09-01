@@ -4,14 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private LayerMask _wallsLayer;
     private static GameHandler _instance;
-    private Rect _debugRect;
-    private static string _debugText = string.Empty;
+    private static Text _debugText;
     public static PlayerReference Player { get; private set; }
     public static CameraReference Camera { get; private set; }
     public static float HorizontalInput { get; private set; }
@@ -23,13 +23,12 @@ public class GameHandler : MonoBehaviour
     {        
         Player = new PlayerReference(GameObject.Find("Player"));
         Camera = new CameraReference(GameObject.Find("Main Camera"));
-        _debugRect = new Rect(10f, 10f, 300f, 200f);
+        _debugText = GameObject.Find("DebugScreen").GetComponent<Text>();
         _instance = this;
     }
 
     private void OnGUI()
     {
-       GUI.TextArea(_debugRect, _debugText);            
     }
 
     // Start is called before the first frame update
@@ -50,11 +49,11 @@ public class GameHandler : MonoBehaviour
     {
         if (appendText)
         {
-            _debugText = $"{text}{Environment.NewLine}{_debugText}";
+            _debugText.text = $"{text}{Environment.NewLine}{_debugText.text}";
         }
         else
         {
-            _debugText = text;
+            _debugText.text = text;
         }
     }
 }
