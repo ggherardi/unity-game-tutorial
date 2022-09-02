@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    [SerializeField] private float _damage;
+    [SerializeField] protected float Damage;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == Constants.Tags.Player)
         {
-            GameHandler.WriteDebug("Ciao");
-            collision.GetComponent<Health>().TakeDamage(_damage);
+            collision.GetComponent<Health>().TakeDamage(Damage);
         }
     }
 }
