@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Platform
   - Enemy
+  - PlayerFireball
+  - Walls
   layers:
   - Default
   - TransparentFX

@@ -17,7 +17,8 @@ namespace Assets.Scripts
 
         public struct Tags
         {
-            public const string Player = "Player";            
+            public const string Player = "Player";
+            public const string PlayerFireball = "PlayerFireball";
         }
 
         public struct Animations

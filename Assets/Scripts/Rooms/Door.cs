@@ -15,11 +15,15 @@ public class Door : MonoBehaviour
         {
             if(collision.transform.position.x < transform.position.x)
             {
-                GameHandler.Camera.CameraHandler.MoveToNewRoom(_nextRoom);
+                _camera.GetComponent<RoomCameraHandler>().MoveToNewRoom(_nextRoom);
+                _nextRoom.GetComponent<Room>().ActivateRoom(true);
+                _previousRoom.GetComponent<Room>().ActivateRoom(false);
             }
             else
             {
-                GameHandler.Camera.CameraHandler.MoveToNewRoom(_previousRoom);
+                _camera.GetComponent<RoomCameraHandler>().MoveToNewRoom(_previousRoom);
+                _nextRoom.GetComponent<Room>().ActivateRoom(false);
+                _previousRoom.GetComponent<Room>().ActivateRoom(true);
             }
         }
     }
