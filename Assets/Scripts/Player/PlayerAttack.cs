@@ -21,7 +21,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (GameHandler.HasRightClicked && _attackCooldown < _cooldownTimer && _playerMovementHandler.CanAttack())
+        if (Input.GetMouseButton(1) && _attackCooldown < _cooldownTimer && _playerMovementHandler.CanAttack())
         {
             Attack();
         }
@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
     // Object pooling will be used instead of instantiate and destroy
     private void Attack()
     {
-        _playerAnimator.SetTrigger(Constants.Animations.Player.AttackTrigger);
+        _playerAnimator.SetTrigger(Constants.Animations.Player.Fire);
         _cooldownTimer = 0;
 
         // Moving one of the fireballs to the firepoint

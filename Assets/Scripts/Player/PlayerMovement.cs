@@ -49,15 +49,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _playerBody.velocity = new Vector2(GameHandler.HorizontalInput * Speed, _playerBody.velocity.y);
 
-            if (OnWall() && !IsGrounded())
-            {
-                _playerBody.gravityScale = 0;
-                _playerBody.velocity = Vector2.zero;
-            }
-            else
-            {
-                _playerBody.gravityScale = 7;
-            }
+            ManageHanging();
 
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -70,15 +62,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void ManageHanging()
+    {
+        if (OnWall() && !IsGrounded())
+        {
+            if (!_playerAnimator.GetBool(Constants.Animations.Player.IsHanging))
+            {
+                _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, true);
+            }
+            _playerAnimator.SetTrigger(Constants.Animations.Player.StartHangingTrigger);
+            _playerBody.gravityScale = 0;
+            _playerBody.velocity = Vector2.zero;
+        }
+        else
+        {
+            if (_playerAnimator.GetBool(Constants.Animations.Player.IsHanging))
+            {
+                _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, false);
+            }
+            _playerBody.gravityScale = 7;
+        }
+    }
+
     private void Jump()
     {
         if (IsGrounded())
-        {
+        {            
             _playerAnimator.SetTrigger(Constants.Animations.Player.JumpTrigger);
             _playerBody.velocity = new Vector2(_playerBody.velocity.x, JumpForce);
         }       
         else if (OnWall())
         {
+            _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, false);
             if (GameHandler.HorizontalInput == 0)
             {
                 _playerBody.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);

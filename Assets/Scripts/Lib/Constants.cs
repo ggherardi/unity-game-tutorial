@@ -21,16 +21,29 @@ namespace Assets.Scripts
             public const string PlayerFireball = "PlayerFireball";
         }
 
+        public struct Directions
+        {
+            public const int Right = 1;
+            public const int Left = -1;
+        }
+
         public struct Animations
         {
+            public struct Generics
+            {
+                public const string MeleeAttack = "meleeAttack";
+            }
+
             public struct Player
             {
                 public const string Run = "run";
                 public const string Grounded = "grounded";
+                public const string IsHanging = "isHanging";
                 public const string JumpTrigger = "jumpTrigger";
-                public const string AttackTrigger = "attackTrigger";
+                public const string Fire = "fireboltTrigger";
                 public const string HurtTrigger = "hurtTrigger";
                 public const string DeathTrigger = "deathTrigger";
+                public const string StartHangingTrigger = "startHangingTrigger";
             }            
             public struct Fireball
             {
