@@ -45,6 +45,16 @@ namespace Assets.Scripts
                 public const string DeathTrigger = "deathTrigger";
                 public const string StartHangingTrigger = "startHangingTrigger";
             }            
+
+            public struct Bandit
+            {
+                public const string IsRunning = "isRunning";
+                public const string MeleeAttack = "meleeAttack";
+                public const string RangedAttack = "rangedAttack";
+                public const string Hurt = "hurt";
+                public const string Death = "death";
+            }
+
             public struct Fireball
             {
                 public const string ExplodeTrigger = "explodeTrigger";

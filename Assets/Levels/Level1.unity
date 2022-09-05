@@ -594,8 +594,9 @@ Transform:
   m_Children:
   - {fileID: 1587442937}
   - {fileID: 1438510001}
+  - {fileID: 1055567990}
   m_Father: {fileID: 470316402}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &284921789
 MonoBehaviour:
@@ -613,6 +614,8 @@ MonoBehaviour:
   _rightEdge: {fileID: 1438510001}
   _enemy: {fileID: 1055567990}
   _speed: 2
+  _idleTime: 2
+  _enemyAnimator: {fileID: 1055567993}
 --- !u!1 &303150723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,7 +1307,6 @@ Transform:
   - {fileID: 1369813527}
   - {fileID: 2055873502}
   - {fileID: 875521998}
-  - {fileID: 1055567990}
   - {fileID: 284921788}
   m_Father: {fileID: 1954129830}
   m_RootOrder: 0
@@ -3949,6 +3951,11 @@ SpriteRenderer:
 --- !u!4 &1055567990 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4942476385687279920, guid: cf2dd18d240545a45a8b2b20f955a31c, type: 3}
+  m_PrefabInstance: {fileID: 4942476385715169606}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1055567993 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4942476385687279921, guid: cf2dd18d240545a45a8b2b20f955a31c, type: 3}
   m_PrefabInstance: {fileID: 4942476385715169606}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1058909373
@@ -7216,11 +7223,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 470316402}
+    m_TransformParent: {fileID: 284921788}
     m_Modifications:
     - target: {fileID: 4942476385687279920, guid: cf2dd18d240545a45a8b2b20f955a31c, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4942476385687279920, guid: cf2dd18d240545a45a8b2b20f955a31c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7265,10 +7272,6 @@ PrefabInstance:
     - target: {fileID: 4942476385687279923, guid: cf2dd18d240545a45a8b2b20f955a31c, type: 3}
       propertyPath: m_Name
       value: Bandit
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942476385687279935, guid: cf2dd18d240545a45a8b2b20f955a31c, type: 3}
-      propertyPath: m_Mass
-      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf2dd18d240545a45a8b2b20f955a31c, type: 3}
