@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float _maxHealth;
     public float MaxHealth => _maxHealth;
     public float CurrentHealth { get; private set; }
-    private Animator _playerAnimator;
+    private Animator _animator;
     private bool _dead;
 
     [Header("iFrames")]
@@ -22,7 +22,7 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        _playerAnimator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         CurrentHealth = _maxHealth;
     }
 
@@ -53,7 +53,7 @@ public class Health : MonoBehaviour
         CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, _maxHealth);
         if(CurrentHealth > 0)
         {            
-            _playerAnimator.SetTrigger(Constants.Animations.Player.HurtTrigger);
+            _animator.SetTrigger(Constants.Animations.Generics.HurtTrigger);
             StartCoroutine(IFrame());
             //iframes
         }
@@ -61,8 +61,27 @@ public class Health : MonoBehaviour
         {
             if (!_dead)
             {
-                _playerAnimator.SetTrigger(Constants.Animations.Player.DeathTrigger);
-                GetComponent<PlayerMovement>().enabled = false;
+                _animator.SetTrigger(Constants.Animations.Generics.DeathTrigger);
+
+                // Player
+                PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+                if(playerMovement != null)
+                {
+                    playerMovement.enabled = false;
+                }
+
+                // Enemy
+                EnemyPatrol enemyPatrol = GetComponentInParent<EnemyPatrol>();
+                if(enemyPatrol != null)
+                {
+                    enemyPatrol.enabled = false;
+                }
+                MeleeEnemy meleeEnemy = GetComponent<MeleeEnemy>();
+                if(meleeEnemy != null)
+                {
+                    meleeEnemy.enabled = false;
+                }
+
                 _dead = true;
             }            
         }

@@ -5,14 +5,20 @@ using UnityEngine;
 
 public class MeleeEnemy : MonoBehaviour
 {
-    [Header("Base melee stats")]
+    [Header("Attack Parameters")]
     [SerializeField] private int _attackDamage;
-    [SerializeField] private float _range;
-    [SerializeField] private float _colliderDistance;
     [SerializeField] private float _attackCooldown;
-    [SerializeField] private LayerMask _playerLayerMask;
+    [SerializeField] private float _range;
+
+    [Header("Collider Parameters")]
+    [SerializeField] private float _colliderDistance;
     [SerializeField] private BoxCollider2D _boxCollider;
+
+    [Header("Player Layer")]
+    [SerializeField] private LayerMask _playerLayerMask;
+
     private float _cooldownTimer = Mathf.Infinity;
+    private bool _isAttacking = false;
 
     // References
     private Animator _animator;
@@ -34,13 +40,14 @@ public class MeleeEnemy : MonoBehaviour
             {
                 _cooldownTimer = 0;
                 _animator.SetTrigger(Constants.Animations.Generics.MeleeAttack);
+                _isAttacking = true;
             }
         }        
 
         if(_enemyPatrol != null)
         {
             // This stops the bandit if the player enters in sight by disabling the patrolling script
-            _enemyPatrol.enabled = !IsPlayerInSight();
+            _enemyPatrol.enabled = !IsPlayerInSight() && !_isAttacking;
         }
     }
 
@@ -63,6 +70,11 @@ public class MeleeEnemy : MonoBehaviour
         {
             _playerHealth.TakeDamage(_attackDamage);
         }
+    }
+
+    private void EndAttack()
+    {
+        _isAttacking = false;
     }
 
     private void OnDrawGizmos()

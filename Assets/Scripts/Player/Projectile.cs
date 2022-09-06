@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField]
-    private float Speed;
+    [SerializeField] private float Speed;
+    
     private float _direction;
     private bool _hit;
+    private float _playerRangedDamage;
     private BoxCollider2D _projectileCollider;
     private Animator _projectileAnimator;
     private float _lifetime;
 
     private void Awake()
     {
+        _playerRangedDamage = GetComponentInParent<PlayerAttack>().RangedDamage;
         _projectileCollider = GetComponent<BoxCollider2D>();
         _projectileAnimator = GetComponent<Animator>();
     }
@@ -39,6 +41,11 @@ public class Projectile : MonoBehaviour
             _hit = true;
             _projectileCollider.enabled = false;
             _projectileAnimator.SetTrigger(Constants.Animations.Fireball.ExplodeTrigger);
+
+            if(collision.tag == Constants.Tags.Enemy)
+            {
+                collision.GetComponent<Health>().TakeDamage(_playerRangedDamage);
+            }
         }        
     }
 
