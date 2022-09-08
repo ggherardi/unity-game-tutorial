@@ -41,7 +41,6 @@ public class GameHandler : MonoBehaviour
     void Update()
     {        
         HorizontalInput = Input.GetAxis("Horizontal");
-        print("Horizontalinput = " + HorizontalInput);
         HasRightClicked = Input.GetMouseButton(0);
     }
 

@@ -20,6 +20,7 @@ namespace Assets.Scripts
             public const string Player = "Player";
             public const string PlayerFireball = "PlayerFireball";
             public const string Enemy = "Enemy";
+            public const string Walls = "Walls";
         }
 
         public struct Directions
@@ -33,6 +34,7 @@ namespace Assets.Scripts
             public struct Generics
             {
                 public const string MeleeAttack = "meleeAttack";
+                public const string RangedAttack = "rangedAttack";
                 public const string DeathTrigger = "deathTrigger";
                 public const string HurtTrigger = "hurtTrigger";
             }

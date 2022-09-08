@@ -6,23 +6,23 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float Speed;
-    
+    [SerializeField] private float _damage;
+
     private float _direction;
     private bool _hit;
-    private float _playerRangedDamage;
     private BoxCollider2D _projectileCollider;
     private Animator _projectileAnimator;
     private float _lifetime;
 
     private void Awake()
     {
-        _playerRangedDamage = GetComponentInParent<PlayerAttack>().RangedDamage;
         _projectileCollider = GetComponent<BoxCollider2D>();
         _projectileAnimator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        GameHandler.WriteDebug(transform.localScale.x.ToString());
         if (_hit) return;
         float _movementSpeed = Speed * Time.deltaTime * _direction;
         transform.Translate(new Vector3(_movementSpeed, 0, 0));
@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
 
             if(collision.tag == Constants.Tags.Enemy)
             {
-                collision.GetComponent<Health>().TakeDamage(_playerRangedDamage);
+                collision.GetComponent<Health>().TakeDamage(_damage);
             }
         }        
     }
