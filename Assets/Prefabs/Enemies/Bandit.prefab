@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4942476385687279921}
   - component: {fileID: 4942476385687279932}
   - component: {fileID: 4942476385687279935}
+  - component: {fileID: 4365985472641243799}
   m_Layer: 8
   m_Name: Bandit
   m_TagString: Enemy
@@ -52,6 +53,8 @@ MonoBehaviour:
   _maxHealth: 3
   _iframesDuration: 0
   _numberOfFlashes: 0
+  _components:
+  - {fileID: 4942476385687279930}
 --- !u!114 &4942476385687279930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,13 +68,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackDamage: 1
+  _attackCooldown: 1
   _range: 1
   _colliderDistance: 0.5
-  _attackCooldown: 1
+  _boxCollider: {fileID: 4942476385687279932}
   _playerLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  _boxCollider: {fileID: 4942476385687279932}
 --- !u!212 &4942476385687279934
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -191,3 +194,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4365985472641243799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4942476385687279923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8039fdc9fe9038b4f9a93f04451ec10a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 0.5

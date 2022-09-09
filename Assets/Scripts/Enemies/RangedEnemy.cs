@@ -6,6 +6,7 @@ using UnityEngine;
 public class RangedEnemy : MonoBehaviour
 {
     [Header("Attack Parameters")]
+    [SerializeField] private float _meleeDamage;
     [SerializeField] private int _attackDamage;
     [SerializeField] private float _attackCooldown;
     [SerializeField] private float _range;
@@ -26,6 +27,7 @@ public class RangedEnemy : MonoBehaviour
     private bool _isAttacking = false;
 
     // References
+    private Health _playerHealth;
     private Animator _animator;
     private EnemyPatrol _enemyPatrol;
 
@@ -61,8 +63,20 @@ public class RangedEnemy : MonoBehaviour
             new Vector3(_boxCollider.bounds.size.x * _range, _boxCollider.bounds.size.y, _boxCollider.bounds.size.z),
             0, Vector2.left, 0,
             _playerLayerMask);
+        bool isInSight = hit.collider != null;
+        if(isInSight)
+        {
+            _playerHealth = hit.collider.GetComponent<Health>();
+        }
+        return isInSight;
+    }
 
-        return hit.collider != null;
+    private void MeleeAttack()
+    {
+        if (IsPlayerInSight())
+        {
+            _playerHealth.TakeDamage(_meleeDamage);
+        }
     }
 
     private void RangedAttack()

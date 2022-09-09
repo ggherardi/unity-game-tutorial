@@ -19,6 +19,9 @@ public class Health : MonoBehaviour
     [SerializeField] private int _numberOfFlashes;
     private SpriteRenderer _playerSpriteRenderer;
 
+    [Header("Components")]
+    [SerializeField] private Behaviour[] _components;
+
     private void Awake()
     {
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -63,23 +66,9 @@ public class Health : MonoBehaviour
             {
                 _animator.SetTrigger(Constants.Animations.Generics.DeathTrigger);
 
-                // Player
-                PlayerMovement playerMovement = GetComponent<PlayerMovement>();
-                if(playerMovement != null)
+                foreach(Behaviour item in _components)
                 {
-                    playerMovement.enabled = false;
-                }
-
-                // Enemy
-                EnemyPatrol enemyPatrol = GetComponentInParent<EnemyPatrol>();
-                if(enemyPatrol != null)
-                {
-                    enemyPatrol.enabled = false;
-                }
-                MeleeEnemy meleeEnemy = GetComponent<MeleeEnemy>();
-                if(meleeEnemy != null)
-                {
-                    meleeEnemy.enabled = false;
+                    item.enabled = false;
                 }
 
                 _dead = true;
@@ -91,5 +80,16 @@ public class Health : MonoBehaviour
     {
         float healAmount = MaxHealth * healAmountPercentage;
         CurrentHealth = Mathf.Clamp(CurrentHealth + healAmount, CurrentHealth, MaxHealth);
+    }
+
+    private void Deactivate()
+    {
+        StartCoroutine(DeactivateAfterTicks(2));
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator DeactivateAfterTicks(float seconds)
+    {        
+        yield return new WaitForSeconds(seconds);
     }
 }
