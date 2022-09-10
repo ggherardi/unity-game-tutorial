@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13fa291c222c451469a568f67c77ec4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _jumpSound: {fileID: 8300000, guid: 80fcbf0dcba2202428340ecc1aebaf52, type: 3}
   Speed: 10
   JumpForce: 15
 --- !u!114 &3286291755884592753
@@ -195,6 +196,8 @@ MonoBehaviour:
   _components:
   - {fileID: 3286291755884592757}
   - {fileID: 3286291755884592754}
+  _deathSound: {fileID: 8300000, guid: 8a725d406ed798f439e1282cdda2a517, type: 3}
+  _hurtSound: {fileID: 8300000, guid: 59c25b67c08dcd745a319b253c74695c, type: 3}
 --- !u!114 &3286291755884592754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +225,7 @@ MonoBehaviour:
   - {fileID: 3486788562782774966}
   - {fileID: 3486788561529379571}
   - {fileID: 3486788562170588217}
+  _fireballSound: {fileID: 8300000, guid: 375036ab6dfb1ad41a3cb419a8100906, type: 3}
 --- !u!61 &3286291755884592756
 BoxCollider2D:
   m_ObjectHideFlags: 0

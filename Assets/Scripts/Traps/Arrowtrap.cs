@@ -7,6 +7,10 @@ public class Arrowtrap : MonoBehaviour
     [SerializeField] private float _attackCooldown;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private GameObject[] _arrows;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip _shootSound;
+
     private float _cooldownTimer;
     private int _arrowCounter = 0;
 
@@ -17,10 +21,12 @@ public class Arrowtrap : MonoBehaviour
 
     private void Attack()
     {
+        SoundManager.PlaySound(_shootSound);
         _cooldownTimer = 0;
         GameObject arrow = _arrows[_arrowCounter];
         arrow.transform.position = _firePoint.position;
         arrow.GetComponent<EnemyProjectile>().ActivateProjectile();
+        arrow.GetComponent<EnemyProjectile>().SetDirection(Mathf.Sign(gameObject.transform.localScale.x));
         _arrowCounter = _arrowCounter == _arrows.Length ? _arrowCounter = 0 : _arrowCounter + 1;
     }
 

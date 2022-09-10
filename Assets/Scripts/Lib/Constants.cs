@@ -75,5 +75,11 @@ namespace Assets.Scripts
             public const int Player = 7;
             public const int Enemy = 8;
         }
+
+        public struct Levels
+        {
+            public const string Level1 = "Level1";
+            public const string Level2 = "Level2";
+        }
     }
 }

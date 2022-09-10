@@ -22,6 +22,10 @@ public class Health : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Behaviour[] _components;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip _deathSound;
+    [SerializeField] private AudioClip _hurtSound;
+
     private void Awake()
     {
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -55,7 +59,8 @@ public class Health : MonoBehaviour
         // Returns min if value < min, value if min < value < max, max if value < value
         CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, _maxHealth);
         if(CurrentHealth > 0)
-        {            
+        {
+            SoundManager.PlaySound(_hurtSound);
             _animator.SetTrigger(Constants.Animations.Generics.HurtTrigger);
             StartCoroutine(IFrame());
             //iframes
@@ -65,7 +70,7 @@ public class Health : MonoBehaviour
             if (!_dead)
             {
                 _animator.SetTrigger(Constants.Animations.Generics.DeathTrigger);
-
+                SoundManager.PlaySound(_deathSound);
                 foreach(Behaviour item in _components)
                 {
                     item.enabled = false;

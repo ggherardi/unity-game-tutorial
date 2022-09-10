@@ -10,10 +10,11 @@ public class PlayerMovement : MonoBehaviour
     private Collider2D _playerCollider;
     private float _wallJumpCooldown;
 
-    #region Serialized fields
+    [Header("Sound")]
+    [SerializeField] private AudioClip _jumpSound;
+
     public float Speed;
     public float JumpForce;
-    #endregion
 
     // Start is called before the first frame update
     private void Awake()
@@ -90,7 +91,8 @@ public class PlayerMovement : MonoBehaviour
         {            
             _playerAnimator.SetTrigger(Constants.Animations.Player.JumpTrigger);
             _playerBody.velocity = new Vector2(_playerBody.velocity.x, JumpForce);
-        }       
+            SoundManager.PlaySound(_jumpSound);
+        }
         else if (OnWall())
         {
             _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, false);

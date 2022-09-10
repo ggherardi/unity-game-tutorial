@@ -9,7 +9,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _attackCooldown;
     [SerializeField] private float _rangedDamage;
     [SerializeField] private Transform _firePoint; // Position from which the fireballs will be fired
-    [SerializeField] private GameObject[] _fireballsHolder;    
+    [SerializeField] private GameObject[] _fireballsHolder;
+    [SerializeField] private AudioClip _fireballSound;
 
     private int _fireballCounter = 0;
     private Animator _playerAnimator;
@@ -36,6 +37,7 @@ public class PlayerAttack : MonoBehaviour
     // Object pooling will be used instead of instantiate and destroy
     private void Attack()
     {
+        SoundManager.PlaySound(_fireballSound);
         _playerAnimator.SetTrigger(Constants.Animations.Player.Fire);
         _cooldownTimer = 0;
 

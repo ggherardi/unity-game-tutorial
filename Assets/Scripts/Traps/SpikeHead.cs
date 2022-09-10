@@ -15,6 +15,9 @@ public class SpikeHead : EnemyDamage
     private Vector3 _destination;    
     private bool _attacking;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip _smashSound;
+
     private Vector3[] _directions = new Vector3[4];
 
     private void Update()
@@ -75,6 +78,7 @@ public class SpikeHead : EnemyDamage
         base.OnTriggerEnter2D(collision);
         if(collision.tag != Constants.Tags.PlayerFireball)
         {
+            SoundManager.PlaySound(_smashSound);
             Stop();
         }
     }

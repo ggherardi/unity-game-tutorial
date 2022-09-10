@@ -12,6 +12,9 @@ public class Firetrap : MonoBehaviour
     private Animator _firetrapAnimator;
     private SpriteRenderer _firetrapSpriteRenderer;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip _burnSound;
+
     private bool _triggered;
     private bool _active;
 
@@ -33,6 +36,7 @@ public class Firetrap : MonoBehaviour
         yield return new WaitForSeconds(_activationDelay);
         _active = true;
         _firetrapAnimator.SetBool(Constants.Animations.Firetrap.Active, true);
+        SoundManager.PlaySound(_burnSound);
 
         yield return new WaitForSeconds(_activeTime);
         _active = false;

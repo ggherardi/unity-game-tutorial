@@ -57,6 +57,7 @@ MonoBehaviour:
   _wallLayer:
     serializedVersion: 2
     m_Bits: 0
+  _smashSound: {fileID: 8300000, guid: ccd2a7366b5107f4c849d0901a3404cf, type: 3}
 --- !u!212 &3001961177841443471
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // I added this to avoid hitting doors that are just triggers
-        if (!collision.isTrigger)
+        if (!collision.isTrigger || collision.tag == Constants.Tags.Enemy)
         {
             _hit = true;
             _projectileCollider.enabled = false;

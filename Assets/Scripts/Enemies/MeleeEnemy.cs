@@ -17,6 +17,9 @@ public class MeleeEnemy : MonoBehaviour
     [Header("Player Layer")]
     [SerializeField] private LayerMask _playerLayerMask;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip _swordHitSound;
+
     private float _cooldownTimer = Mathf.Infinity;
     private bool _isAttacking = false;
 
@@ -36,7 +39,7 @@ public class MeleeEnemy : MonoBehaviour
         _cooldownTimer += Time.deltaTime;
         if (IsPlayerInSight())
         {
-            if (_cooldownTimer > _attackCooldown)
+            if (_cooldownTimer > _attackCooldown && _playerHealth.CurrentHealth > 0)
             {
                 _cooldownTimer = 0;
                 _animator.SetTrigger(Constants.Animations.Generics.MeleeAttack);
@@ -68,6 +71,7 @@ public class MeleeEnemy : MonoBehaviour
     {
         if (IsPlayerInSight())
         {
+            SoundManager.PlaySound(_swordHitSound);
             _playerHealth.TakeDamage(_attackDamage);
         }
     }

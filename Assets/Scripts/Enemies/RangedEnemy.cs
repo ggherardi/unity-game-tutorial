@@ -23,6 +23,9 @@ public class RangedEnemy : MonoBehaviour
     [Header("Player Layer")]
     [SerializeField] private LayerMask _playerLayerMask;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip _fireballSound;
+
     private float _cooldownTimer = Mathf.Infinity;
     private bool _isAttacking = false;
 
@@ -73,7 +76,7 @@ public class RangedEnemy : MonoBehaviour
 
     private void MeleeAttack()
     {
-        if (IsPlayerInSight())
+        if (IsPlayerInSight() && !_isAttacking)
         {
             _playerHealth.TakeDamage(_meleeDamage);
         }
@@ -82,7 +85,7 @@ public class RangedEnemy : MonoBehaviour
     private void RangedAttack()
     {
         _cooldownTimer = 0;
-
+        SoundManager.PlaySound(_fireballSound);
         EnemyProjectile projectile = _fireballs[_fireballCounter].GetComponent<EnemyProjectile>();
         _fireballs[_fireballCounter].transform.position = _firePoint.position;
         projectile.SetDirection(Mathf.Sign(transform.localScale.x));
