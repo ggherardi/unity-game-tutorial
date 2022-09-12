@@ -69,13 +69,13 @@ public class Health : MonoBehaviour
         {
             if (!_dead)
             {
-                _animator.SetTrigger(Constants.Animations.Generics.DeathTrigger);
                 SoundManager.PlaySound(_deathSound);
                 foreach(Behaviour item in _components)
                 {
                     item.enabled = false;
                 }
-
+                _animator.SetBool(Constants.Animations.Player.Grounded, true);
+                _animator.SetTrigger(Constants.Animations.Generics.DeathTrigger);
                 _dead = true;
             }            
         }

@@ -14,6 +14,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _coyoteTime; // How much time the player can hang in the air before jumping
     private float _coyoteCounter; // How much time passed since the player ran off the edge
 
+    [Header("Multiple Jumps")]
+    [SerializeField] private int _extraJumps;
+    private int _jumpCounter;
+
+    [Header("Wall Jumping")]
+    [SerializeField] private float _wallJumpX; // Horizontal Wall Jump force
+    [SerializeField] private float _wallJumpY; // Vertical wall jump force
+
     [Header("Sound")]
     [SerializeField] private AudioClip _jumpSound;
 
@@ -56,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         // Jump
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Jump();
+            DeterminateJump();
         }
 
         // Adjustable jump height. If pressed early it divides a big velocity so the body slows up faster and will fall down faster.
@@ -79,7 +87,8 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 // Reset coyote counter when on the ground
-                _coyoteCounter = _coyoteTime; 
+                _coyoteCounter = _coyoteTime;
+                _jumpCounter = _extraJumps;
             }
             else
             {
@@ -109,10 +118,10 @@ public class PlayerMovement : MonoBehaviour
     //    }
     //}
 
-    private void Jump()
+    private void DeterminateJump()
     {
-        // Can't jump If not on wall and coyote counter has expired
-        if(_coyoteTime > 0 && _coyoteCounter <= 0 && !OnWall()) return;
+        // If coyote counter is 0 or less and not on the wall and don't have any jump left don't do anything
+        if(_coyoteTime > 0 && _coyoteCounter <= 0 && !OnWall() && _jumpCounter <= 0) return;
 
         if (OnWall())
         {
@@ -122,18 +131,32 @@ public class PlayerMovement : MonoBehaviour
         {
             if (IsGrounded() || _coyoteCounter > 0)
             {
-                // Actual jump
-                _playerBody.velocity = new Vector2(_playerBody.velocity.x, _jumpForce);
+                Jump();
+            }
+            else
+            {
+                // If is not on ground and coyoteCounter is 0 then we can double jump if we still have jumps left
+                if(_jumpCounter > 0)
+                {
+                    Jump();
+                    _jumpCounter--;
+                }
             }
 
-            // Reset coyote counter to 0 to avoid double jump
-            _coyoteCounter = 0;
-        }        
+        }
+        // Reset coyote counter to 0 to avoid double jump
+        _coyoteCounter = 0;
     }
 
     private void WallJump()
     {
+        _playerBody.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * _wallJumpX, _wallJumpY));
+    }
 
+    private void Jump()
+    {
+        _playerBody.velocity = new Vector2(_playerBody.velocity.x, _jumpForce);
+        SoundManager.PlaySound(_jumpSound);
     }
 
     private bool IsGrounded()

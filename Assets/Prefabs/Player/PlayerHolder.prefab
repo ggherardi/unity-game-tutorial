@@ -176,6 +176,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coyoteTime: 0.25
+  _extraJumps: 1
+  _wallJumpX: 2500
+  _wallJumpY: 750
   _jumpSound: {fileID: 8300000, guid: 80fcbf0dcba2202428340ecc1aebaf52, type: 3}
   _speed: 10
   _jumpForce: 15
