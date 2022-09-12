@@ -27,8 +27,11 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Awake()
     {
-        _movingLeft = Mathf.Sign(_enemy.localScale.x) == Constants.Directions.Left;
-        _initialScale = _enemy.localScale;
+        if (_enemy != null) 
+        {
+            _movingLeft = Mathf.Sign(_enemy.localScale.x) == Constants.Directions.Left;
+            _initialScale = _enemy.localScale;
+        }
         _idleTimer = _idleTime;
     }
 
@@ -60,7 +63,10 @@ public class EnemyPatrol : MonoBehaviour
 
     private void OnDisable()
     {
-        _enemyAnimator.SetBool(Constants.Animations.Bandit.IsRunning, false);
+        if(_enemyAnimator != null)
+        {
+            _enemyAnimator.SetBool(Constants.Animations.Bandit.IsRunning, false);
+        }
     }
 
     private void DirectionChange()

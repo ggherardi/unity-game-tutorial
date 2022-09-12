@@ -10,11 +10,16 @@ public class PlayerMovement : MonoBehaviour
     private Collider2D _playerCollider;
     private float _wallJumpCooldown;
 
+    [Header("Coyote Time")]
+    [SerializeField] private float _coyoteTime; // How much time the player can hang in the air before jumping
+    private float _coyoteCounter; // How much time passed since the player ran off the edge
+
     [Header("Sound")]
     [SerializeField] private AudioClip _jumpSound;
 
-    public float Speed;
-    public float JumpForce;
+    [Header("Movement values")]
+    [SerializeField] private float _speed;
+    [SerializeField] private float _jumpForce;
 
     // Start is called before the first frame update
     private void Awake()
@@ -41,77 +46,95 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-
         // Sets run animation
         _playerAnimator.SetBool(Constants.Animations.Player.Run, GameHandler.HorizontalInput != 0);
         _playerAnimator.SetBool(Constants.Animations.Player.Grounded, IsGrounded());
 
-        if(_wallJumpCooldown > 0.2f)
+        // Sets velocity. In the tutorial is being set in the else of the If(OnWall())
+        //_playerBody.velocity = new Vector2(GameHandler.HorizontalInput * Speed, _playerBody.velocity.y);
+
+        // Jump
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            _playerBody.velocity = new Vector2(GameHandler.HorizontalInput * Speed, _playerBody.velocity.y);
-
-            ManageHanging();
-
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                Jump();
-            }            
+            Jump();
         }
-        else
-        {
-            _wallJumpCooldown += Time.deltaTime;
-        }
-    }
 
-    public void ManageHanging()
-    {
-        if (OnWall() && !IsGrounded())
+        // Adjustable jump height. If pressed early it divides a big velocity so the body slows up faster and will fall down faster.
+        // If key up happens when the jump is almost done, the velocity will be lower but will still be reduced. In that case the body would have jumped higher anyway because
+        // it was pressed later
+        if (Input.GetKeyUp(KeyCode.W) && _playerBody.velocity.y > 0)
         {
-            if (!_playerAnimator.GetBool(Constants.Animations.Player.IsHanging))
-            {
-                _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, true);
-            }
-            _playerAnimator.SetTrigger(Constants.Animations.Player.StartHangingTrigger);
+            _playerBody.velocity = new Vector2(_playerBody.velocity.x, _playerBody.velocity.y / 2);
+        }
+
+        if (OnWall())
+        {
             _playerBody.gravityScale = 0;
             _playerBody.velocity = Vector2.zero;
         }
         else
         {
-            if (_playerAnimator.GetBool(Constants.Animations.Player.IsHanging))
+            _playerBody.gravityScale = GameHandler.DefaultGravity;
+            _playerBody.velocity = new Vector2(GameHandler.HorizontalInput * _speed, _playerBody.velocity.y);
+            if (IsGrounded())
             {
-                _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, false);
-            }
-            _playerBody.gravityScale = 7;
-        }
-    }
-
-    private void Jump()
-    {
-        if (IsGrounded())
-        {            
-            _playerAnimator.SetTrigger(Constants.Animations.Player.JumpTrigger);
-            _playerBody.velocity = new Vector2(_playerBody.velocity.x, JumpForce);
-            SoundManager.PlaySound(_jumpSound);
-        }
-        else if (OnWall())
-        {
-            _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, false);
-            if (GameHandler.HorizontalInput == 0)
-            {
-                _playerBody.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
-                transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                // Reset coyote counter when on the ground
+                _coyoteCounter = _coyoteTime; 
             }
             else
             {
-                _playerBody.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
+                _coyoteCounter -= Time.deltaTime; // Start decreasing coyote counter when not on the ground
             }
-            _wallJumpCooldown = 0;            
         }
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
+    //public void ManageHanging()
     //{
+    //    if (OnWall() && !IsGrounded())
+    //    {
+    //        if (!_playerAnimator.GetBool(Constants.Animations.Player.IsHanging))
+    //        {
+    //            _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, true);
+    //        }
+    //        _playerAnimator.SetTrigger(Constants.Animations.Player.StartHangingTrigger);
+    //        _playerBody.gravityScale = 0;
+    //        _playerBody.velocity = Vector2.zero;
+    //    }
+    //    else
+    //    {
+    //        if (_playerAnimator.GetBool(Constants.Animations.Player.IsHanging))
+    //        {
+    //            _playerAnimator.SetBool(Constants.Animations.Player.IsHanging, false);
+    //        }
+    //    }
     //}
+
+    private void Jump()
+    {
+        // Can't jump If not on wall and coyote counter has expired
+        if(_coyoteTime > 0 && _coyoteCounter <= 0 && !OnWall()) return;
+
+        if (OnWall())
+        {
+            WallJump();
+        }
+        else
+        {
+            if (IsGrounded() || _coyoteCounter > 0)
+            {
+                // Actual jump
+                _playerBody.velocity = new Vector2(_playerBody.velocity.x, _jumpForce);
+            }
+
+            // Reset coyote counter to 0 to avoid double jump
+            _coyoteCounter = 0;
+        }        
+    }
+
+    private void WallJump()
+    {
+
+    }
 
     private bool IsGrounded()
     {        

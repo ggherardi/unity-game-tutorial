@@ -10,6 +10,7 @@ public class GameHandler : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private LayerMask _wallsLayer;
+    [SerializeField] private float _defaultGravity;
     private static GameHandler _instance;
     private static Text _debugText;
     public static PlayerReference Player { get; private set; }
@@ -17,7 +18,8 @@ public class GameHandler : MonoBehaviour
     public static float HorizontalInput { get; private set; }
     public static bool HasRightClicked { get; private set; }    
     public static LayerMask GroundLayer => _instance._groundLayer;
-    public static LayerMask WallLayer => _instance._wallsLayer;    
+    public static LayerMask WallLayer => _instance._wallsLayer;
+    public static float DefaultGravity => _instance._defaultGravity;
 
     private void Awake()
     {        
