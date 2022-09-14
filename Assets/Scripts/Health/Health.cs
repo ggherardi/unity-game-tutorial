@@ -70,10 +70,7 @@ public class Health : MonoBehaviour
             if (!_dead)
             {
                 SoundManager.PlaySound(_deathSound);
-                foreach(Behaviour item in _components)
-                {
-                    item.enabled = false;
-                }
+                ToggleComponents();
                 _animator.SetBool(Constants.Animations.Player.Grounded, true);
                 _animator.SetTrigger(Constants.Animations.Generics.DeathTrigger);
                 _dead = true;
@@ -87,10 +84,28 @@ public class Health : MonoBehaviour
         CurrentHealth = Mathf.Clamp(CurrentHealth + healAmount, CurrentHealth, MaxHealth);
     }
 
+    public void HealthRespawn()
+    {
+        _dead = false;
+        HealByPercentage(100);
+        _animator.ResetTrigger(Constants.Animations.Generics.DeathTrigger);
+        _animator.Play(Constants.Animations.Generics.IdleAnimName);
+        ToggleComponents();
+        StartCoroutine(IFrame());
+    }
+
     private void Deactivate()
     {
         StartCoroutine(DeactivateAfterTicks(2));
         gameObject.SetActive(false);
+    }
+
+    private void ToggleComponents()
+    {
+        foreach (Behaviour item in _components)
+        {
+            item.enabled = !item.enabled;
+        }
     }
 
     private IEnumerator DeactivateAfterTicks(float seconds)

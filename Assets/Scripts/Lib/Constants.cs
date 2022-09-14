@@ -21,6 +21,7 @@ namespace Assets.Scripts
             public const string PlayerFireball = "PlayerFireball";
             public const string Enemy = "Enemy";
             public const string Walls = "Walls";
+            public const string Checkpoint = "Checkpoint";
         }
 
         public struct Directions
@@ -33,6 +34,7 @@ namespace Assets.Scripts
         {
             public struct Generics
             {
+                public const string IdleAnimName = "Idle";
                 public const string MeleeAttack = "meleeAttack";
                 public const string RangedAttack = "rangedAttack";
                 public const string DeathTrigger = "deathTrigger";
@@ -67,6 +69,11 @@ namespace Assets.Scripts
             {
                 public const string IsHit = "isHit";
                 public const string Active = "active";
+            }
+
+            public struct Checkpoint
+            {
+                public const string AppearTrigger = "appear";
             }
         }        
 
