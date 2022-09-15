@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator _playerAnimator;
     private Collider2D _playerCollider;
     private float _wallJumpCooldown;
+    private UIManager _uiManager;
 
     [Header("Coyote Time")]
     [SerializeField] private float _coyoteTime; // How much time the player can hang in the air before jumping
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         _playerBody = GetComponent<Rigidbody2D>();       
         _playerAnimator = GetComponent<Animator>();
         _playerCollider = GetComponent<Collider2D>();
+        _uiManager = FindObjectOfType<UIManager>();
     }
 
     void Start()
@@ -44,7 +46,12 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _uiManager.GameOver();
+        }
+
         // Flips character based on direction
         if (GameHandler.HorizontalInput > 0.01f)
         {
